@@ -4,18 +4,17 @@
       <div class="wrapper"></div>
     </header>
     <main>
+      <div v-if="isLoading">Loading...</div>
       <GoodsList />
       <CartList />
     </main>
-    <pre>{{ goods }}</pre>
   </div>
 </template>
 
 <script lang="ts">
 import CartList from '@/components/cart/CartList.vue';
 import GoodsList from '@/components/goods/GoodsList.vue';
-import Vue, { type PropType, type VueConstructor } from 'vue';
-import { goods } from './api';
+import Vue, { type VueConstructor } from 'vue';
 
 export default (Vue as VueConstructor<Vue>).extend({
   name: 'App',
@@ -25,16 +24,29 @@ export default (Vue as VueConstructor<Vue>).extend({
   },
   data() {
     return {
-      goods: {},
+      isLoading: false,
+      intervalId: 0 as number,
     };
   },
   created() {
-    this.loadGoods();
+    this.isLoading = true;
+    this.fetchGoodsName();
+    this.fetchGoodsWithInterval();
+    this.isLoading = false;
+  },
+  beforeDestroy() {
+    clearInterval(this.intervalId);
   },
   methods: {
-    async loadGoods() {
-      const data = await goods.getAll();
-      this.goods = data;
+    fetchGoods() {
+      this.$store.dispatch('loadGoods');
+    },
+    fetchGoodsWithInterval() {
+      //TODO change delay to 15000
+      this.intervalId = setInterval(() => this.$store.dispatch('loadGoods'), 5000);
+    },
+    fetchGoodsName() {
+      this.$store.dispatch('loadGoodsNames');
     },
   },
 });
