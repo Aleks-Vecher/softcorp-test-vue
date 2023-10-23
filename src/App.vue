@@ -5,7 +5,7 @@
         <div class="goods-container">
           <CurrencyInput />
           <div v-if="isLoading">Loading...</div>
-          <GoodsList />
+          <GoodsGroupList />
         </div>
         <div class="cart-container">
           <CartList />
@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import CartList from '@/components/cart/CartList.vue';
-import GoodsList from '@/components/goods/GoodsList.vue';
+import GoodsGroupList from '@/components/goods/GoodsGroupList.vue';
 import CurrencyInput from '@/components/CurrencyInput.vue';
 import Vue, { type VueConstructor } from 'vue';
 
@@ -25,7 +25,7 @@ export default (Vue as VueConstructor<Vue>).extend({
   name: 'App',
   components: {
     CartList,
-    GoodsList,
+    GoodsGroupList,
     CurrencyInput,
   },
   data() {

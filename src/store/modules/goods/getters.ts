@@ -5,6 +5,7 @@ type GoodsGetters = {
   goodsWithNewCurrency: (state: GoodsState) => GoodsState['goods'];
   goods: (state: GoodsState) => GoodsState['goods'];
   goodsNames: (state: GoodsState) => GoodsState['names'];
+  currencyChange: (state: GoodsState) => GoodsState['currencyFluctuation']
 };
 
 export const goodsGetters: GoodsGetters = {
@@ -17,4 +18,6 @@ export const goodsGetters: GoodsGetters = {
   },
   goods: (state) => state.goods,
   goodsNames: (state) => state.names,
+  currencyChange: (state) => state.currencyFluctuation
+
 };

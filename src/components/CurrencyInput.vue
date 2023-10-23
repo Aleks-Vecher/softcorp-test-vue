@@ -1,6 +1,6 @@
 <template>
   <div class="currency-container">
-    <label>Курс: </label>
+    <label>Курс &#8381; : </label>
     <input :class="{ error: !isValidCurrencyNumber }" v-model="currency" @blur="() => setPrevValideCurrency()" />
     <div>
       <span v-if="!isValidCurrencyNumber">The value should be between 20-80 and number</span>
@@ -34,6 +34,7 @@ export default (Vue as VueConstructor<Vue>).extend({
       let currencyValue = parseFloat(val).toFixed(2);
       if (Number(currencyValue) >= 20 && Number(currencyValue) <= 80) {
         this.isValidCurrencyNumber = true;
+        this.$store.dispatch('setCurrencyFluctuation', currencyValue);
         this.$store.dispatch('updateCurrency', currencyValue);
       } else {
         this.isValidCurrencyNumber = false;

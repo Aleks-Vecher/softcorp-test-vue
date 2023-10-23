@@ -9,6 +9,7 @@ export enum GOODS_ACTION_TYPE {
   UPDATE_GOODS = 'updateGoods',
   UPDATE_GOODS_NAMES = 'updateGoodsNames',
   UPDATE_CURRENCY = 'updateCurrency',
+  SET_CURRENCY_FLUCTUATION = 'setCurrencyFluctuation',
 }
 
 type GoodsContext = AugmentedActionContext<GoodsState, GoodsMutation>;
@@ -16,6 +17,7 @@ type GoodsActions = {
   loadGoods({ commit }: GoodsContext): Promise<IGood[]>;
   loadGoodsNames({ commit }: GoodsContext): void;
   updateCurrency({ commit }: GoodsContext, payload: string): void;
+  setCurrencyFluctuation({ commit }: GoodsContext, payload: string): void;
 };
 
 export const goodsActions: ActionTree<GoodsState, GoodsState> & GoodsActions = {
@@ -52,5 +54,25 @@ export const goodsActions: ActionTree<GoodsState, GoodsState> & GoodsActions = {
 
   updateCurrency({ commit }, payload) {
     commit(GOODS_ACTION_TYPE.UPDATE_CURRENCY, payload);
+  },
+  setCurrencyFluctuation({ commit, getters }, payload) {
+    let newValue = '';
+    const prevValue = getters.currency;
+    // if(getters.currencyFluctuation === ''){
+    //   newValue = 'none'
+    //   commit(GOODS_ACTION_TYPE.SET_CURRENCY_FLUCTUATION, newValue);
+    //   return
+    // }
+    if ((+prevValue > +payload) && +prevValue) {
+      newValue = 'green';
+      commit(GOODS_ACTION_TYPE.SET_CURRENCY_FLUCTUATION, newValue);
+      return
+    }
+    if ((+prevValue < +payload) && +prevValue) {
+      newValue = 'red';
+      commit(GOODS_ACTION_TYPE.SET_CURRENCY_FLUCTUATION, newValue);
+      return
+    }
+
   },
 };

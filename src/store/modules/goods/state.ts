@@ -4,6 +4,7 @@ export interface GoodsState {
   goods: IGood[];
   names: IGoodsNames;
   currency: string;
+  currencyFluctuation: string;
 }
 
 export function generateInitialGoodsState(): GoodsState {
@@ -11,5 +12,6 @@ export function generateInitialGoodsState(): GoodsState {
     goods: [],
     names: {},
     currency: '',
+    currencyFluctuation: '',
   };
 }
