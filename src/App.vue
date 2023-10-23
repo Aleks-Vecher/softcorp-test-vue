@@ -1,12 +1,16 @@
 <template>
   <div id="app">
-    <header>
-      <div class="wrapper"></div>
-    </header>
-    <main>
-      <div v-if="isLoading">Loading...</div>
-      <GoodsList />
-      <CartList />
+    <main class="container">
+      <div class="main__inner">
+        <div class="goods-container">
+          <CurrencyInput />
+          <div v-if="isLoading">Loading...</div>
+          <GoodsList />
+        </div>
+        <div class="cart-container">
+          <CartList />
+        </div>
+      </div>
     </main>
   </div>
 </template>
@@ -14,6 +18,7 @@
 <script lang="ts">
 import CartList from '@/components/cart/CartList.vue';
 import GoodsList from '@/components/goods/GoodsList.vue';
+import CurrencyInput from '@/components/CurrencyInput.vue';
 import Vue, { type VueConstructor } from 'vue';
 
 export default (Vue as VueConstructor<Vue>).extend({
@@ -21,6 +26,7 @@ export default (Vue as VueConstructor<Vue>).extend({
   components: {
     CartList,
     GoodsList,
+    CurrencyInput,
   },
   data() {
     return {
@@ -32,7 +38,6 @@ export default (Vue as VueConstructor<Vue>).extend({
     this.isLoading = true;
     this.fetchGoodsName();
     this.fetchGoodsWithInterval();
-    this.isLoading = false;
   },
   beforeDestroy() {
     clearInterval(this.intervalId);
@@ -43,7 +48,7 @@ export default (Vue as VueConstructor<Vue>).extend({
     },
     fetchGoodsWithInterval() {
       //TODO change delay to 15000
-      this.intervalId = setInterval(() => this.$store.dispatch('loadGoods'), 5000);
+      this.intervalId = setInterval(() => this.$store.dispatch('loadGoods').then(() => (this.isLoading = false)), 5000);
     },
     fetchGoodsName() {
       this.$store.dispatch('loadGoodsNames');
@@ -57,26 +62,11 @@ header {
   line-height: 1.5;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.container {
+  padding: 0 1rem;
 }
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.main__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 </style>
