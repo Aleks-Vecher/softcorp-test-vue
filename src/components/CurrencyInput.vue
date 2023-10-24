@@ -3,7 +3,7 @@
     <label>Курс &#8381; : </label>
     <input :class="{ error: !isValidCurrencyNumber }" v-model="currency" @blur="() => setPrevValideCurrency()" />
     <div>
-      <span v-if="!isValidCurrencyNumber">The value should be between 20-80 and number</span>
+      <span v-if="!isValidCurrencyNumber">значение должно быть числом и в пределах 20-80</span>
     </div>
   </div>
 </template>

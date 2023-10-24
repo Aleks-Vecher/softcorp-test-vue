@@ -11,7 +11,7 @@
                 <span>&#8381; {{ item['C'] }}</span>
               </div>
               <div class="row-good__item-btn">
-                <button>Купить</button>
+                <button @click="addItemToCart(item.id)">Купить</button>
               </div>
             </div>
           </li>
@@ -39,7 +39,7 @@ export default (Vue as VueConstructor<Vue>).extend({
     };
   },
   computed: {
-    ...mapGetters(['goodsNames', 'currencyChange']),
+    ...mapGetters(['goodsNames', 'currencyChange', 'getGoodById']),
   },
   methods: {
     toogleListRow(e: any) {
@@ -48,6 +48,10 @@ export default (Vue as VueConstructor<Vue>).extend({
         e.target.nextElementSibling.classList.toggle('hidden');
       }
     },
+    addItemToCart(id: string){
+      const goodItemId = this.getGoodById(id)
+      this.$store.dispatch('addCartItem', goodItemId)
+    }
   },
 });
 </script>
@@ -66,7 +70,7 @@ ul {
 }
 
 .row-good__item-price {
-  margin: auto 0;
+  margin: auto 16px auto 0;
 }
 
 .row-good__item-btn {

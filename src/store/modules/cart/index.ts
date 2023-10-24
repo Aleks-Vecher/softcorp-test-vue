@@ -1,24 +1,13 @@
-const state = {
-
-}
-
-const getters = {
-
-}
-
-const actions = {
-
-}
-
-const mutations = {
-  
-}
+import { cartActions } from './actions';
+import { cartGetters } from './getters';
+import { cartMuttations } from './mutations';
+import { generateInitialCartState } from './state';
 
 const cartModule = {
-  state,
-  getters,
-  actions,
-  mutations
-}
+  state: generateInitialCartState,
+  getters: cartGetters,
+  actions: cartActions,
+  mutations: cartMuttations,
+};
 
-export default cartModule
+export default cartModule;
