@@ -1,7 +1,7 @@
 <template>
   <div>
     <li>
-      <span @click="toogleListRow">
+      <span @click.stop="toogleListRow">
         <span ref="indicator">&gt; </span>
         {{ goodsNames[groupNumber]['G'] }}
       </span>
@@ -45,14 +45,15 @@ export default (Vue as VueConstructor<Vue>).extend({
     ...mapGetters(['goodsNames', 'currencyChange', 'getGoodById']),
   },
   methods: {
-    toogleListRow(e: any) {
-      e.stopPropagation();
-      if (e.target) {
-        e.target.nextElementSibling.classList.toggle('hidden');
-        if (e.target.nextElementSibling.classList.contains('hidden')) {
-          this.$refs.indicator.innerHTML = '&gt;';
-        } else {
-          this.$refs.indicator.innerHTML = '&or;';
+    toogleListRow(e: Event) {
+      if ((e.target as HTMLSpanElement).nextElementSibling) {
+        (e.target as HTMLSpanElement)?.nextElementSibling?.classList.toggle('hidden');
+        if (this.$refs.indicator) {
+          if ((e.target as HTMLSpanElement)?.nextElementSibling?.classList.contains('hidden')) {
+            (this.$refs.indicator as HTMLSpanElement).innerHTML = '&gt;';
+          } else {
+            (this.$refs.indicator as HTMLSpanElement).innerHTML = '&or;';
+          }
         }
       }
     },
