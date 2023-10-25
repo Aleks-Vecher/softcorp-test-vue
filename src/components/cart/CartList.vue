@@ -1,17 +1,26 @@
 <template>
   <div>
     <table>
+      <thead>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </thead>
       <tbody>
-        <tr v-for="(value, key) in cartItems">
-          <CartListItem />
+        <tr v-for="item in cartItems">
+          <CartListItem :item="item" :cartItemId="item.id" />
         </tr>
       </tbody>
     </table>
-    Общая стоимость &#8381; :  {{ summaryPrice }}
+    <div>
+      <div>Общая стоимость :</div>
+      <div class="text_bold">&#8381; {{ summaryPrice }}</div>
+    </div>
   </div>
 </template>
 <script lang="ts">
-import Vue, { type PropType, type VueConstructor } from 'vue';
+import Vue, { type VueConstructor } from 'vue';
 import { mapGetters } from 'vuex';
 import CartListItem from '@/components/cart/CartListItem.vue';
 
@@ -25,4 +34,12 @@ export default (Vue as VueConstructor<Vue>).extend({
   },
 });
 </script>
-<style scoped></style>
+<style scoped>
+table {
+  width: 100%;
+}
+
+.text_bold {
+  font-weight: 600;
+}
+</style>

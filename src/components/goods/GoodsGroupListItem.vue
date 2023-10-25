@@ -1,14 +1,17 @@
 <template>
   <div>
     <li>
-      <span @click="toogleListRow">&gt; {{ goodsNames[groupNumber]['G'] }}</span>
+      <span @click="toogleListRow">
+        <span ref="indicator">&gt; </span>
+        {{ goodsNames[groupNumber]['G'] }}
+      </span>
       <div class="hidden">
         <ul v-for="item in value">
           <li>
             <div class="row-good-container">
               <div>{{ goodsNames[groupNumber]['B'][item['T']]['N'] }} ({{ item['P'] }})</div>
-              <div class="row-good__item-price" :style="{ backgroundColor: currencyChange }">
-                <span>&#8381; {{ item['C'] }}</span>
+              <div class="row-good__item-price">
+                <span :style="{ backgroundColor: currencyChange }">&#8381; {{ item['C'] }}</span>
               </div>
               <div class="row-good__item-btn">
                 <button @click="addItemToCart(item.id)">Купить</button>
@@ -46,12 +49,17 @@ export default (Vue as VueConstructor<Vue>).extend({
       e.stopPropagation();
       if (e.target) {
         e.target.nextElementSibling.classList.toggle('hidden');
+        if (e.target.nextElementSibling.classList.contains('hidden')) {
+          this.$refs.indicator.innerHTML = '&gt;';
+        } else {
+          this.$refs.indicator.innerHTML = '&or;';
+        }
       }
     },
-    addItemToCart(id: string){
-      const goodItemId = this.getGoodById(id)
-      this.$store.dispatch('addCartItem', goodItemId)
-    }
+    addItemToCart(id: string) {
+      const goodItemId = this.getGoodById(id);
+      this.$store.dispatch('addCartItem', goodItemId);
+    },
   },
 });
 </script>

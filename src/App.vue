@@ -37,6 +37,7 @@ export default (Vue as VueConstructor<Vue>).extend({
   created() {
     this.isLoading = true;
     this.fetchGoodsName();
+    this.fetchGoods()
     this.fetchGoodsWithInterval();
   },
   beforeDestroy() {
@@ -44,11 +45,10 @@ export default (Vue as VueConstructor<Vue>).extend({
   },
   methods: {
     fetchGoods() {
-      this.$store.dispatch('loadGoods');
+      this.$store.dispatch('loadGoods').then(() => (this.isLoading = false));
     },
     fetchGoodsWithInterval() {
-      //TODO change delay to 15000
-      this.intervalId = setInterval(() => this.$store.dispatch('loadGoods').then(() => (this.isLoading = false)), 5000);
+      this.intervalId = setInterval(() => this.$store.dispatch('loadGoods'), 15000);
     },
     fetchGoodsName() {
       this.$store.dispatch('loadGoodsNames');

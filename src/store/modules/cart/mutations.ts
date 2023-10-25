@@ -10,9 +10,27 @@ export type CartMutation = {
 
 export const cartMuttations: MutationTree<ICartItemsState> & CartMutation = {
   [CART_ACTION_TYPE.ADD_CART_ITEM](state, payload) {
-    state.cartItems = [...state.cartItems, payload];
+    let newCartItemsArr: IGood[] = [];
+    const index = state.cartItems.findIndex((item) => item.id === payload.id);
+    if (index > -1) {
+      newCartItemsArr = state.cartItems.map((item) => {
+        if (item.id === payload.id && item.amount) {
+          return { ...item, amount: item.amount + 1 };
+        }
+        return item;
+      });
+    } else {
+      newCartItemsArr = [...state.cartItems, { ...payload, amount: 1 }];
+    }
+    state.cartItems = newCartItemsArr;
   },
   [CART_ACTION_TYPE.DELETE_CART_ITEM](state, id) {
-    state.cartItems = state.cartItems.filter((item) => item.id !== id);
+    const index = state.cartItems.findIndex((item) => item.id == id);
+    let item = state.cartItems[index];
+    if (item.amount) {
+      item.amount === 1
+        ? (state.cartItems = state.cartItems.slice(0, index).concat(state.cartItems.slice(index + 1)))
+        : (state.cartItems[index]['amount'] = item.amount - 1);
+    }
   },
 };

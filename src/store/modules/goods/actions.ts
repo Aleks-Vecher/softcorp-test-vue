@@ -58,13 +58,8 @@ export const goodsActions: ActionTree<GoodsState, GoodsState> & GoodsActions = {
   setCurrencyFluctuation({ commit, getters }, payload) {
     let newValue = '';
     const prevValue = getters.currency;
-    // if(getters.currencyFluctuation === ''){
-    //   newValue = 'none'
-    //   commit(GOODS_ACTION_TYPE.SET_CURRENCY_FLUCTUATION, newValue);
-    //   return
-    // }
     if ((+prevValue > +payload) && +prevValue) {
-      newValue = 'green';
+      newValue = 'limegreen';
       commit(GOODS_ACTION_TYPE.SET_CURRENCY_FLUCTUATION, newValue);
       return
     }

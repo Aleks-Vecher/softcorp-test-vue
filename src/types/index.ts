@@ -6,7 +6,8 @@ export interface IGood {
   P: number;
   Pl: null;
   T: number;
-  id: string
+  id: string;
+  amount?: number;
 }
 
 export interface IGoods {

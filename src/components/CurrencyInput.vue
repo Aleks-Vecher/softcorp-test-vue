@@ -2,7 +2,7 @@
   <div class="currency-container">
     <label>Курс &#8381; : </label>
     <input :class="{ error: !isValidCurrencyNumber }" v-model="currency" @blur="() => setPrevValideCurrency()" />
-    <div>
+    <div class="error-message">
       <span v-if="!isValidCurrencyNumber">значение должно быть числом и в пределах 20-80</span>
     </div>
   </div>
@@ -46,5 +46,8 @@ export default (Vue as VueConstructor<Vue>).extend({
 <style scoped>
 .error {
   border: 2px solid red;
+}
+.error-message {
+  min-height: 24px;
 }
 </style>

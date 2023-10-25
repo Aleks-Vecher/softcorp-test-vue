@@ -2,24 +2,15 @@ import { priceCalculation } from './../../../utils/index';
 import type { IGood } from '@/types';
 import type { ICartItemsState } from './state';
 
-type INewCartItems = { [index: string]: IGood[] };
+export type INewCartItems = Map<string, IGood[]>;
 type CartItemsGetters = {
-  cartItems: (state: ICartItemsState, getters: any) => INewCartItems;
+  cartItems: (state: ICartItemsState, getters: any) => IGood[];
   summaryPrice: (state: ICartItemsState, getters: any) => number;
 };
 
 export const cartGetters: CartItemsGetters = {
-  cartItems: (state: ICartItemsState, getters) => {
-    let newCartItems: INewCartItems = {};
-    state.cartItems.forEach((item) => {
-      if (newCartItems[item.id]) {
-        newCartItems[item.id] = [...newCartItems[item.id], { ...item, C: priceCalculation(item.C, getters.currency) }];
-      } else {
-        newCartItems[item.id] = [{ ...item, C: priceCalculation(item.C, getters.currency) }];
-      }
-    });
-    return newCartItems;
-  },
+  cartItems: (state: ICartItemsState, getters) =>
+    state.cartItems.map((item) => ({ ...item, C: priceCalculation(item.C, getters.currency) })),
   summaryPrice: (state: ICartItemsState, getters) =>
-    +state.cartItems.reduce((acc, item) => acc + priceCalculation(item.C, getters.currency), 0).toFixed(2),
+    +state.cartItems.reduce((acc, item) => acc + priceCalculation(item.C, getters.currency) * (item.amount ?? 1), 0).toFixed(2),
 };

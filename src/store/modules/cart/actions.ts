@@ -15,7 +15,7 @@ type CartActions = {
 };
 
 export const cartActions: ActionTree<ICartItemsState, ICartItemsState> & CartActions = {
-  addCartItem({ commit }, payload) {
+  addCartItem({ commit, getters }, payload) {
     commit(CART_ACTION_TYPE.ADD_CART_ITEM, payload);
   },
 };
