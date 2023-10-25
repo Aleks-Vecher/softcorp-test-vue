@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ count }}
+    <span>Обновление через: {{ count }}</span> 
   </div>
 </template>
 <script lang="ts">
